@@ -4,6 +4,8 @@ plugins {
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id ("androidx.navigation.safeargs.kotlin")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -83,6 +85,7 @@ dependencies {
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("com.google.code.gson:gson:2.8.6")
 }
 
 // Allow references to generated code

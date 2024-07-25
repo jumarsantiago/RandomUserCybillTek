@@ -1,3 +1,4 @@
+/*
 package com.example.randomusercybilltek.data.local
 
 import androidx.room.TypeConverter
@@ -5,9 +6,9 @@ import com.example.randomusercybilltek.model.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class Converters {
+class Converter {
     @TypeConverter
-    fun fromName(name: Name): String {
+    fun fromName(name: Name): String? {
         return Gson().toJson(name)
     }
 
@@ -60,3 +61,4 @@ class Converters {
     }
 
 }
+*/

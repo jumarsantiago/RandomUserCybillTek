@@ -9,18 +9,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.randomusercybilltek.data.NetworkResponse
 import com.example.randomusercybilltek.databinding.ActivityMainBinding
 import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
-import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -62,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_refresh -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

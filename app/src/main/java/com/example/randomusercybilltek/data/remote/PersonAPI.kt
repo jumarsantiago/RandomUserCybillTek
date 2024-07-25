@@ -13,9 +13,8 @@ import retrofit2.http.Query
  */
 interface PersonAPI {
 
-    @GET("/api/")
+    @GET("api/")
     suspend fun getRandomUsers(
-        @Query("page") page: Int,
         @Query("results") count: Int
     ): UserModel
 

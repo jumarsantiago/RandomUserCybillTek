@@ -5,25 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.randomusercybilltek.data.NetworkResponse
 import com.example.randomusercybilltek.databinding.FragmentUsersBinding
-import com.example.randomusercybilltek.view.PersonAdapter
+import com.example.randomusercybilltek.model.Results
 import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class UsersFragment : Fragment() {
+class UsersFragment : Fragment(){
 
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: RandomUserViewModel
+    private lateinit var randomUserViewModel: RandomUserViewModel
+    private lateinit var personAdapter: PersonAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -33,32 +31,38 @@ class UsersFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = PersonAdapter()
+        personAdapter = PersonAdapter()
+        randomUserViewModel = ViewModelProvider(this)[RandomUserViewModel::class.java]
 
-        viewModel = ViewModelProvider(this)[RandomUserViewModel::class.java]
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = personAdapter
+        }
 
-
-        viewModel.fetchRandomUsers(1)
-        viewModel.personList.observe(viewLifecycleOwner) { persons ->
-                adapter.submitList(persons)
+        randomUserViewModel.personList.observe(viewLifecycleOwner) { persons ->
+            personAdapter.submitList(persons)
         }
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.fetchRandomUsers(1)
+
         }
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+        randomUserViewModel.isLoading.observe(viewLifecycleOwner) {
             // Show or hide loading indicator
         }
-        viewModel.error.observe(viewLifecycleOwner) { error ->
+        randomUserViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
                 // Show error message
             }
         }
+        randomUserViewModel.fetchRandomUsers()
 
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
+   /* override fun onPersonClick(person: Results) {
+       // val action = UsersFragmentDirections.actionUsersFragmentToSecondFragment(person)
+        //findNavController().navigate(action)
+    }*/
 }

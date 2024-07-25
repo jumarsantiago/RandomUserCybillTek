@@ -17,25 +17,29 @@ class PersonAdapter : ListAdapter<Results, PersonAdapter.PersonViewHolder>(Perso
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         holder.bind(getItem(position))
+        /*val person = getItem(position)
+        holder.bind(person)
+        holder.itemView.setOnClickListener {
+            listener.onPersonClick(person)
+        }*/
     }
 
     class PersonViewHolder(private val binding: ItemPersonPreviewBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(person: Results) {
             binding.tvFullName.text = buildString {
-                append(person.first)
+                append(person.name?.first)
                 append(" ")
-                append(person.last)
+                append(person.name?.last)
             }
             binding.tvGender.text = person.gender
-            binding.tvNationality.text = person.city
+            binding.tvNationality.text = person.location?.city
         }
     }
 }
 
 class PersonDiffCallback : DiffUtil.ItemCallback<Results>() {
     override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.id?.value == newItem.id?.value
     }
 
     override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {
