@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.randomusercybilltek.data.PersonRepository
 import com.example.randomusercybilltek.data.RealPersonRepository
+import com.example.randomusercybilltek.data.local.AppDatabase
+import com.example.randomusercybilltek.data.local.PersonDao
 import com.example.randomusercybilltek.data.remote.PersonAPI
 import dagger.Module
 import dagger.Provides
@@ -14,16 +16,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
-/**
- * Created by Jumar Santiago on 19/07/2024.
- * Copyright 2022 Yondu
- * All Rights Reserved.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object DependencyContainer {
 
- /*   @Provides
+    @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
@@ -37,12 +34,12 @@ object DependencyContainer {
     @Singleton
     fun providePersonDao(database: AppDatabase): PersonDao {
         return database.personDao()
-    }*/
+    }
 
     @Provides
     @Singleton
-    fun providePersonRepository(personAPI: PersonAPI/*, personDao: PersonDao*/): PersonRepository {
-        return RealPersonRepository(/*personDao,*/ personAPI)
+    fun providePersonRepository(personAPI: PersonAPI, personDao: PersonDao): PersonRepository {
+        return RealPersonRepository(personDao, personAPI)
     }
 
 }

@@ -1,4 +1,3 @@
-/*
 package com.example.randomusercybilltek.data.local
 
 import android.content.Context
@@ -13,4 +12,3 @@ import com.example.randomusercybilltek.model.Results
 abstract class AppDatabase : RoomDatabase() {
     abstract fun personDao(): PersonDao
 }
-*/

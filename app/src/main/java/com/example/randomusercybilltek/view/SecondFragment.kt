@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.randomusercybilltek.databinding.FragmentSecondBinding
-import com.example.randomusercybilltek.model.Results
 
 class SecondFragment : Fragment() {
 
@@ -23,4 +22,4 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
-}
+    }

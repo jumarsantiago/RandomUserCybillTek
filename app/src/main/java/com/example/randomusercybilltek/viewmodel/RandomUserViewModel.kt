@@ -9,15 +9,16 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import androidx.lifecycle.ViewModel
 import com.example.randomusercybilltek.data.PersonRepository
+import com.example.randomusercybilltek.data.local.PersonDao
 import com.example.randomusercybilltek.model.Results
 
 @HiltViewModel
 class RandomUserViewModel @Inject constructor(
-    private val personRepository: PersonRepository
-  //  private val personDao: PersonDao
+    private val personRepository: PersonRepository,
+    private val personDao: PersonDao
 ) : ViewModel() {
-    private val _personList = MutableLiveData<List<Results>>()
-    val personList: LiveData<List<Results>> get() = _personList
+    private val _personList = MutableLiveData<List<Results>?>()
+    val personList: MutableLiveData<List<Results>?> get() = _personList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -28,16 +29,14 @@ class RandomUserViewModel @Inject constructor(
     fun fetchRandomUsers() {
         _isLoading.value = true
         _error.value = null
-
         viewModelScope.launch {
             try {
                 _isLoading.value = false
                 val persons = personRepository.getRandomUsers(10)
-                if (persons.isNotEmpty()){
+                if (persons?.isNotEmpty() == true){
                     _personList.value = persons
-                    //   personDao.insertAll(persons)
+                    personDao.insertAll(persons)
                     Log.d("RandomUserViewModel", "Fetched ${persons.size} users")
-
                 }
             } catch (e: Exception) {
                 _isLoading.value = false
@@ -49,9 +48,9 @@ class RandomUserViewModel @Inject constructor(
         }
     }
 
-/*    private fun getAllPersons() {
+    fun getAllPersons() {
         viewModelScope.launch {
             _personList.postValue(personDao.getAll())
         }
-    }*/
+    }
 }

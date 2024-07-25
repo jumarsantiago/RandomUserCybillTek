@@ -1,4 +1,3 @@
-/*
 package com.example.randomusercybilltek.data.local
 
 import androidx.room.Dao
@@ -19,4 +18,4 @@ interface PersonDao {
 
     @Query("DELETE FROM person_table")
     suspend fun deleteAll()
-}*/
+}

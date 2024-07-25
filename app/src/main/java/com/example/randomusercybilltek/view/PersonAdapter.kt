@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.randomusercybilltek.databinding.ItemPersonPreviewBinding
 import com.example.randomusercybilltek.model.Results
 
-class PersonAdapter : ListAdapter<Results, PersonAdapter.PersonViewHolder>(PersonDiffCallback()) {
+class PersonAdapter(private val listener: OnPersonClickListener) : ListAdapter<Results, PersonAdapter.PersonViewHolder>(PersonDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
         val binding = ItemPersonPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,12 +16,12 @@ class PersonAdapter : ListAdapter<Results, PersonAdapter.PersonViewHolder>(Perso
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        holder.bind(getItem(position))
-        /*val person = getItem(position)
+       // holder.bind(getItem(position))
+        val person = getItem(position)
         holder.bind(person)
         holder.itemView.setOnClickListener {
             listener.onPersonClick(person)
-        }*/
+        }
     }
 
     class PersonViewHolder(private val binding: ItemPersonPreviewBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -39,7 +39,7 @@ class PersonAdapter : ListAdapter<Results, PersonAdapter.PersonViewHolder>(Perso
 
 class PersonDiffCallback : DiffUtil.ItemCallback<Results>() {
     override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
-        return oldItem.id?.value == newItem.id?.value
+        return oldItem.value == newItem.value
     }
 
     override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {

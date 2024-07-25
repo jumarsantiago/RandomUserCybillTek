@@ -1,4 +1,3 @@
-/*
 package com.example.randomusercybilltek.data.local
 
 import androidx.room.TypeConverter
@@ -61,4 +60,3 @@ class Converter {
     }
 
 }
-*/

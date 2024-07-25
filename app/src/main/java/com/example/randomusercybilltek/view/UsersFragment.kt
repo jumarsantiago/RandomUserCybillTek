@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class UsersFragment : Fragment(){
+class UsersFragment : Fragment(), OnPersonClickListener {
 
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
@@ -31,7 +31,7 @@ class UsersFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        personAdapter = PersonAdapter()
+        personAdapter = PersonAdapter(this)
         randomUserViewModel = ViewModelProvider(this)[RandomUserViewModel::class.java]
 
         binding.recyclerView.apply {
@@ -54,6 +54,7 @@ class UsersFragment : Fragment(){
             }
         }
         randomUserViewModel.fetchRandomUsers()
+        randomUserViewModel.getAllPersons()
 
     }
     override fun onDestroyView() {
@@ -61,8 +62,8 @@ class UsersFragment : Fragment(){
         _binding = null
     }
 
-   /* override fun onPersonClick(person: Results) {
-       // val action = UsersFragmentDirections.actionUsersFragmentToSecondFragment(person)
-        //findNavController().navigate(action)
-    }*/
+     override fun onPersonClick(person: Results) {
+         val action = UsersFragmentDirections.actionUsersFragmentToSecondFragment()
+         findNavController().navigate(action)
+     }
 }
