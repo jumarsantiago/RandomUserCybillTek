@@ -10,7 +10,7 @@ class RealPersonRepository @Inject constructor (
     private val personAPI: PersonAPI
 ) : PersonRepository {
 
-   /* override suspend fun getAllPersons(): List<Results> {
+    suspend fun getAllPersons(): List<Results> {
         return personDao.getAll()
     }
 
@@ -20,7 +20,7 @@ class RealPersonRepository @Inject constructor (
 
     suspend fun deleteAll() {
         personDao.deleteAll()
-    }*/
+    }
 
     override suspend fun getRandomUsers(count: Int): List<Results>? {
         return personAPI.getRandomUsers(count).results

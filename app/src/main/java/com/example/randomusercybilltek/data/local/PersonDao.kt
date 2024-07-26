@@ -13,6 +13,9 @@ interface PersonDao {
     @Query("SELECT * FROM person_table")
     suspend fun getAll(): List<Results>
 
+    @Query("SELECT * FROM person_table WHERE UID = :UID")
+    suspend fun getById(UID: Int): Results
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(persons: List<Results>)
 

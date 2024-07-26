@@ -1,13 +1,16 @@
 package com.example.randomusercybilltek.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.randomusercybilltek.R
 import com.example.randomusercybilltek.databinding.FragmentUsersBinding
 import com.example.randomusercybilltek.model.Results
 import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
@@ -23,7 +26,8 @@ class UsersFragment : Fragment(), OnPersonClickListener {
     private lateinit var randomUserViewModel: RandomUserViewModel
     private lateinit var personAdapter: PersonAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,11 +46,13 @@ class UsersFragment : Fragment(), OnPersonClickListener {
         randomUserViewModel.personList.observe(viewLifecycleOwner) { persons ->
             personAdapter.submitList(persons)
         }
-        binding.swipeRefreshLayout.setOnRefreshListener {
 
-        }
+      binding.swipeRefreshLayout.setOnRefreshListener {
+         randomUserViewModel.fetchRandomUsers()
+      }
         randomUserViewModel.isLoading.observe(viewLifecycleOwner) {
-            // Show or hide loading indicator
+            Log.d("Refresh", it.toString())
+            binding.swipeRefreshLayout.isRefreshing = it
         }
         randomUserViewModel.error.observe(viewLifecycleOwner) { error ->
             error?.let {
@@ -54,7 +60,7 @@ class UsersFragment : Fragment(), OnPersonClickListener {
             }
         }
         randomUserViewModel.fetchRandomUsers()
-        randomUserViewModel.getAllPersons()
+        //randomUserViewModel.getAllPersons()
 
     }
     override fun onDestroyView() {
@@ -63,7 +69,9 @@ class UsersFragment : Fragment(), OnPersonClickListener {
     }
 
      override fun onPersonClick(person: Results) {
-         val action = UsersFragmentDirections.actionUsersFragmentToSecondFragment()
-         findNavController().navigate(action)
+         val UID = person.UID
+         findNavController().navigate(
+             R.id.action_UsersFragment_to_ProfileFragment, bundleOf("UID" to UID)
+         )
      }
 }

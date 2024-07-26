@@ -20,6 +20,9 @@ class RandomUserViewModel @Inject constructor(
     private val _personList = MutableLiveData<List<Results>?>()
     val personList: MutableLiveData<List<Results>?> get() = _personList
 
+    private val _person = MutableLiveData<Results>()
+    val person: LiveData<Results> get() = _person
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
@@ -31,8 +34,7 @@ class RandomUserViewModel @Inject constructor(
         _error.value = null
         viewModelScope.launch {
             try {
-                _isLoading.value = false
-                val persons = personRepository.getRandomUsers(10)
+                val persons = personRepository.getRandomUsers(1)
                 if (persons?.isNotEmpty() == true){
                     _personList.value = persons
                     personDao.insertAll(persons)
@@ -50,7 +52,13 @@ class RandomUserViewModel @Inject constructor(
 
     fun getAllPersons() {
         viewModelScope.launch {
-            _personList.postValue(personDao.getAll())
+            _personList.value = personDao.getAll()
+        }
+    }
+
+    fun getByUID(UID: Int){
+        viewModelScope.launch {
+            _person.value = personDao.getById(UID)
         }
     }
 }
