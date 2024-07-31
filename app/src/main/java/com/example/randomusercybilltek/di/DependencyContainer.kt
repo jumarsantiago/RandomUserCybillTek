@@ -38,8 +38,8 @@ object DependencyContainer {
 
     @Provides
     @Singleton
-    fun providePersonRepository(personAPI: PersonAPI, personDao: PersonDao): PersonRepository {
-        return RealPersonRepository(personDao, personAPI)
+    fun providePersonRepository(personAPI: PersonAPI): PersonRepository {
+        return RealPersonRepository(personAPI)
     }
 
 }

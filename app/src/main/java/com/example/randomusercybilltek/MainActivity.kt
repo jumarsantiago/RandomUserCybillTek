@@ -36,26 +36,12 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-
         /*binding.fabMore.setOnClickListener { view ->
             Snackbar.make(view, "Load more", Snackbar.LENGTH_LONG)
                 .setAction("Action", null)
                 .setAnchorView(R.id.fab_more).show()
             viewModel.fetchRandomUsers(1)
         }*/
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_refresh -> true
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

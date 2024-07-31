@@ -8,7 +8,6 @@ import androidx.room.TypeConverters
 import com.example.randomusercybilltek.model.Results
 
 @Database(entities = [Results::class], version = 2, exportSchema = false)
-//@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun personDao(): PersonDao
 }

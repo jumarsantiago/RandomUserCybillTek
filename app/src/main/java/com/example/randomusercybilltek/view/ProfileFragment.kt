@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-   // val value = arguments?.getString("UID")
 
     private val args: ProfileFragmentArgs by navArgs()
 
@@ -51,7 +50,4 @@ class ProfileFragment : Fragment() {
         uid.let { profileViewModel.getByUID(it) }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

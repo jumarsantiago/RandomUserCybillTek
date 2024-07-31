@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.randomusercybilltek.data.PersonRepository
 import com.example.randomusercybilltek.data.local.PersonDao
 import com.example.randomusercybilltek.model.Results
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileVIewModel @Inject constructor(
-    private val personRepository: PersonRepository,
     private val personDao: PersonDao
 ) : ViewModel() {
 
@@ -27,9 +25,9 @@ class ProfileVIewModel @Inject constructor(
     private val _person = MutableLiveData<Results>()
     val person: LiveData<Results> get() = _person
 
-    fun getByUID(UID: Int){
+    fun getByUID(uid: Int){
         viewModelScope.launch {
-            _person.value = personDao.getById(UID)
+            _person.value = personDao.getById(uid)
         }
     }
 }

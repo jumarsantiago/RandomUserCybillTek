@@ -5,12 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.randomusercybilltek.R
 import com.example.randomusercybilltek.databinding.FragmentUsersBinding
 import com.example.randomusercybilltek.model.Results
 import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
@@ -42,12 +40,13 @@ class UsersFragment : Fragment(), OnPersonClickListener {
             adapter = personAdapter
         }
 
+        randomUserViewModel.fetchRandomUsers()
         randomUserViewModel.personList.observe(viewLifecycleOwner) { persons ->
             personAdapter.submitList(persons)
         }
 
-      binding.swipeRefreshLayout.setOnRefreshListener {
-         randomUserViewModel.fetchRandomUsers()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+          randomUserViewModel.refreshUsers()
       }
         randomUserViewModel.isLoading.observe(viewLifecycleOwner) {
             Log.d("Refresh", it.toString())
@@ -58,16 +57,13 @@ class UsersFragment : Fragment(), OnPersonClickListener {
                 // Show error message
             }
         }
-        randomUserViewModel.fetchRandomUsers()
         onClickedButton()
-        //randomUserViewModel.getAllPersons()
-
     }
 
 
     private fun onClickedButton() {
         binding.topNav.btnAllGender.setOnClickListener{
-            randomUserViewModel.fetchRandomUsers()
+            randomUserViewModel.getGender("all")
         }
         binding.topNav.btnMale.setOnClickListener{
             randomUserViewModel.getGender("male")
@@ -85,8 +81,8 @@ class UsersFragment : Fragment(), OnPersonClickListener {
      override fun onPersonClick(person: Results) {
          Log.d("UsersFragment", "Person clicked: $person")
 
-         val UID = person.UID
-         findNavController().navigate(UsersFragmentDirections.actionUsersFragmentToProfileFragment(UID)
+         val uid = person.UID
+         findNavController().navigate(UsersFragmentDirections.actionUsersFragmentToProfileFragment(uid)
          )
      }
 }

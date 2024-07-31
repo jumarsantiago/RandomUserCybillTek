@@ -18,10 +18,7 @@ class RandomUserViewModel @Inject constructor(
     private val personDao: PersonDao
 ) : ViewModel() {
     private val _personList = MutableLiveData<List<Results>?>()
-    val personList: MutableLiveData<List<Results>?> get() = _personList
-/*
-    private val _person = MutableLiveData<Results>()
-    val person: LiveData<Results> get() = _person*/
+    val personList: LiveData<List<Results>?> get() = _personList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -29,19 +26,24 @@ class RandomUserViewModel @Inject constructor(
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
 
+    init {
+        fetchRandomUsers()
+    }
+
     fun fetchRandomUsers() {
         _isLoading.value = true
         _error.value = null
         viewModelScope.launch {
             try {
                 val persons = personRepository.getRandomUsers(10)
-                if (persons?.isNotEmpty() == true){
+                if (!persons.isNullOrEmpty()) {
                     personDao.insertAll(persons)
                     _personList.value = personDao.getAll()
                     Log.d("RandomUserViewModel", "Fetched ${persons.size} users")
+                }else{
+                    _error.value = "No users fetched"
                 }
             } catch (e: Exception) {
-                _isLoading.value = false
                 _error.value = e.message
                 Log.e("RandomUserViewModel", "Error fetching users", e)
             } finally {
@@ -51,17 +53,35 @@ class RandomUserViewModel @Inject constructor(
     }
 
     fun getGender(gender: String) {
+        _isLoading.value = true
         viewModelScope.launch {
             try {
-                val filteredPersons = personDao.getAll().filter { it.gender == gender }
-                _personList.value = filteredPersons
-
-            }catch (e: Exception){
-                _isLoading.value = false
+                if (gender == "all") {
+                    _personList.value = personDao.getAll()
+                    return@launch
+                }else {
+                    val filterPersons = personList.value?.filter { it.gender == gender }
+                    _personList.value = filterPersons
+                }
+            } catch (e: Exception) {
                 _error.value = e.message
                 Log.e("RandomUserViewModel", "Error fetching users", e)
+            } finally {
+                _isLoading.value = false
             }
-            finally {
+        }
+    }
+
+    fun refreshUsers() {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                personDao.deleteAll()
+                fetchRandomUsers()
+            } catch (e: Exception) {
+                _error.value = e.message
+                Log.e("RandomUserViewModel", "Error refreshing users", e)
+            } finally {
                 _isLoading.value = false
             }
         }
