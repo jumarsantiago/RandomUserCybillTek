@@ -59,4 +59,15 @@ class Converter {
         return Gson().fromJson(timezoneString, timezoneType)
     }
 
+    @TypeConverter
+    fun fromPicture(picture: Picture): String {
+        return Gson().toJson(picture)
+    }
+
+    @TypeConverter
+    fun toPicture(pictureString: String): Picture {
+        val pictureType = object : TypeToken<Picture>() {}.type
+        return Gson().fromJson(pictureString, pictureType)
+    }
+
 }

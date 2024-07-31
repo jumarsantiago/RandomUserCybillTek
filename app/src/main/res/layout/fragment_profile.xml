@@ -15,6 +15,14 @@
         android:padding="16dp"
         tools:context=".view.ConcreteProfileFragment">
 
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="134dp"
+            android:layout_height="113dp"
+            android:layout_marginEnd="30dp"
+            android:layout_toStartOf="@+id/tvGender"
+            android:src="@mipmap/ic_launcher" />
+
         <TextView
             android:id="@+id/tvFullName"
             android:layout_width="wrap_content"

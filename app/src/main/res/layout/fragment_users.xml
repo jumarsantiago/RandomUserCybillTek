@@ -14,10 +14,16 @@
         android:layout_height="match_parent"
         android:foregroundGravity="top">
 
+        <include
+            android:id="@+id/topNav" layout="@layout/top_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
             tools:context=".presentation.ui.PersonListFragment">
 
             <androidx.recyclerview.widget.RecyclerView

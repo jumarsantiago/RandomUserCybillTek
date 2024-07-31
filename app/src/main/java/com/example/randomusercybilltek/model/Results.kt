@@ -18,6 +18,6 @@ data class Results(
     val name: Name? = null,
     val nat: String?,
     val phone: String?,
-    //val picture: Picture? = null,
+    val picture: Picture? = null,
    // val registered: Registered? = null
 )

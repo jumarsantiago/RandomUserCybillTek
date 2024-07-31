@@ -74,6 +74,9 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.3.1")
 
+    implementation ("com.github.bumptech.glide:glide:4.13.0")
+    kapt ("com.github.bumptech.glide:compiler:4.13.0")
+
     val  room_version = "2.6.1"
     val hilt_version = "2.51.1"
     implementation ("androidx.room:room-runtime:$room_version")

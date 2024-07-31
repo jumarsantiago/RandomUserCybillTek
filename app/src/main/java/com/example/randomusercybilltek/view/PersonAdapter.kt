@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.randomusercybilltek.databinding.ItemPersonPreviewBinding
 import com.example.randomusercybilltek.model.Results
 
@@ -32,6 +33,9 @@ class PersonAdapter(private val listener: OnPersonClickListener) : ListAdapter<R
             }
             binding.tvGender.text = person.gender ?: "Unknown"
             binding.tvNationality.text = person.location?.city ?: "Unknown"
+            Glide.with(binding.root.context)
+                .load(person.picture?.large ?: person.picture?.medium)
+                .into(binding.imgUser)
         }
     }
 }
@@ -45,4 +49,3 @@ class PersonDiffCallback : DiffUtil.ItemCallback<Results>() {
         return oldItem == newItem
     }
 }
-

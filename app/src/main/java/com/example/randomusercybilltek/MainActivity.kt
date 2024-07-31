@@ -22,9 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var navController: NavController
-
-    private val viewModel: RandomUserViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+
 
         /*binding.fabMore.setOnClickListener { view ->
             Snackbar.make(view, "Load more", Snackbar.LENGTH_LONG)

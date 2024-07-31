@@ -19,9 +19,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include
-        android:id="@+id/topNav" layout="@layout/top_navigation" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment_content_main"
         android:name="androidx.navigation.fragment.NavHostFragment"
