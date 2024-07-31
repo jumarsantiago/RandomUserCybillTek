@@ -16,7 +16,6 @@ class PersonAdapter(private val listener: OnPersonClickListener) : ListAdapter<R
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-       // holder.bind(getItem(position))
         val person = getItem(position)
         holder.bind(person)
         holder.itemView.setOnClickListener {
@@ -27,22 +26,23 @@ class PersonAdapter(private val listener: OnPersonClickListener) : ListAdapter<R
     class PersonViewHolder(private val binding: ItemPersonPreviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(person: Results) {
             binding.tvFullName.text = buildString {
-                append(person.name?.first)
+                append(person.name?.first ?: "Unknown")
                 append(" ")
-                append(person.name?.last)
+                append(person.name?.last ?: "Unknown")
             }
-            binding.tvGender.text = person.gender
-            binding.tvNationality.text = person.location?.city
+            binding.tvGender.text = person.gender ?: "Unknown"
+            binding.tvNationality.text = person.location?.city ?: "Unknown"
         }
     }
 }
 
 class PersonDiffCallback : DiffUtil.ItemCallback<Results>() {
     override fun areItemsTheSame(oldItem: Results, newItem: Results): Boolean {
-        return oldItem.value == newItem.value
+        return oldItem.UID == newItem.UID
     }
 
     override fun areContentsTheSame(oldItem: Results, newItem: Results): Boolean {
         return oldItem == newItem
     }
 }
+

@@ -16,7 +16,6 @@ import com.example.randomusercybilltek.model.Results
 import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class UsersFragment : Fragment(), OnPersonClickListener {
 
@@ -69,9 +68,10 @@ class UsersFragment : Fragment(), OnPersonClickListener {
     }
 
      override fun onPersonClick(person: Results) {
+         Log.d("UsersFragment", "Person clicked: $person")
+
          val UID = person.UID
-         findNavController().navigate(
-             R.id.action_UsersFragment_to_ProfileFragment, bundleOf("UID" to UID)
+         findNavController().navigate(UsersFragmentDirections.actionUsersFragmentToProfileFragment(UID)
          )
      }
 }

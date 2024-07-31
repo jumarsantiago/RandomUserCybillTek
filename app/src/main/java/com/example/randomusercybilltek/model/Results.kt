@@ -8,7 +8,7 @@ import com.example.randomusercybilltek.data.local.Converter
 @Entity(tableName = "person_table")
 @TypeConverters(Converter::class)
 data class Results(
-    @PrimaryKey(autoGenerate = true) val UID: Int = 0,
+    @PrimaryKey(autoGenerate = true) val UID: Int,
     val cell: String?,
     val email: String?,
     val gender: String?,

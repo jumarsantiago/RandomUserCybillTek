@@ -21,9 +21,9 @@
         android:label="@string/profile_fragment_label"
         tools:layout="@layout/fragment_profile">
 
-        <!--<argument
+        <argument
             android:name="UID"
-            app:argType="integer" />-->
+            app:argType="integer" />
 
         <action
             android:id="@+id/action_ProfileFragment_to_UsersFragment"

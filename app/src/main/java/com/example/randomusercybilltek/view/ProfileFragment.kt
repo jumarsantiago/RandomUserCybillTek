@@ -8,14 +8,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.randomusercybilltek.databinding.FragmentProfileBinding
-import com.example.randomusercybilltek.viewmodel.RandomUserViewModel
+import com.example.randomusercybilltek.viewmodel.ProfileVIewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
-    val value = arguments?.getString("UID")
+   // val value = arguments?.getString("UID")
 
-    private lateinit var randomUserViewModel: RandomUserViewModel
+    private val args: ProfileFragmentArgs by navArgs()
+
+    private lateinit var profileViewModel: ProfileVIewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,12 +32,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        randomUserViewModel = ViewModelProvider(this)[RandomUserViewModel::class.java]
+        profileViewModel = ViewModelProvider(this)[ProfileVIewModel::class.java]
 
-
-
-
-        randomUserViewModel.person.observe(viewLifecycleOwner) { person ->
+        profileViewModel.person.observe(viewLifecycleOwner) { person ->
             binding.tvFullName.text = buildString {
         append(person.name?.first)
         append(" ")
@@ -40,7 +42,8 @@ class ProfileFragment : Fragment() {
             binding.tvGender.text = person.gender
             binding.tvNationality.text = person.location?.city
         }
-        value?.toInt()?.let { randomUserViewModel.getByUID(it) }
+        val uid = args.UID
+        uid.let { profileViewModel.getByUID(it) }
     }
 
     override fun onDestroyView() {
