@@ -36,7 +36,6 @@ class RandomUserViewModel @Inject constructor(
             try {
                 val persons = personRepository.getRandomUsers(10)
                 if (persons?.isNotEmpty() == true){
-                   // _personList.value = persons
                     personDao.insertAll(persons)
                     _personList.value = personDao.getAll()
                     Log.d("RandomUserViewModel", "Fetched ${persons.size} users")
@@ -51,15 +50,20 @@ class RandomUserViewModel @Inject constructor(
         }
     }
 
-    fun getAllPersons() {
+    fun getGender(gender: String) {
         viewModelScope.launch {
-            _personList.value = personDao.getAll()
+            try {
+                val filteredPersons = personDao.getAll().filter { it.gender == gender }
+                _personList.value = filteredPersons
+
+            }catch (e: Exception){
+                _isLoading.value = false
+                _error.value = e.message
+                Log.e("RandomUserViewModel", "Error fetching users", e)
+            }
+            finally {
+                _isLoading.value = false
+            }
         }
     }
-
-   /* fun getByUID(UID: Int){
-        viewModelScope.launch {
-            _person.value = personDao.getById(UID)
-        }
-    }*/
 }

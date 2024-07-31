@@ -9,32 +9,32 @@
 
 
     <Button
-        android:id="@+id/btnSameGender"
+        android:id="@+id/btn_all_gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Same Gender"
+        android:text="@string/all_gender"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnMale"
+        android:id="@+id/btn_male"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="Male"
-        app:layout_constraintStart_toEndOf="@+id/btnSameGender"
-        app:layout_constraintTop_toTopOf="@+id/btnSameGender" />
+        android:text="@string/male"
+        app:layout_constraintStart_toEndOf="@+id/btn_all_gender"
+        app:layout_constraintTop_toTopOf="@+id/btn_all_gender" />
 
     <Button
-        android:id="@+id/btnFemale"
+        android:id="@+id/btn_female"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Female"
+        android:text="@string/female"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
-        app:layout_constraintStart_toEndOf="@+id/btnMale"
-        app:layout_constraintTop_toTopOf="@+id/btnMale" />
+        app:layout_constraintStart_toEndOf="@+id/btn_male"
+        app:layout_constraintTop_toTopOf="@+id/btn_male" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

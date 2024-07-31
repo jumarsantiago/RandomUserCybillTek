@@ -58,14 +58,23 @@ class UsersFragment : Fragment(), OnPersonClickListener {
                 // Show error message
             }
         }
-        onClickedButton()
         randomUserViewModel.fetchRandomUsers()
+        onClickedButton()
         //randomUserViewModel.getAllPersons()
 
     }
 
+
     private fun onClickedButton() {
-        //binding.root.topNav.btnSameGender.setOnClickListener {
+        binding.topNav.btnAllGender.setOnClickListener{
+            randomUserViewModel.fetchRandomUsers()
+        }
+        binding.topNav.btnMale.setOnClickListener{
+            randomUserViewModel.getGender("male")
+        }
+        binding.topNav.btnFemale.setOnClickListener{
+            randomUserViewModel.getGender("female")
+        }
     }
 
     override fun onDestroyView() {
